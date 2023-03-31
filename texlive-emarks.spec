@@ -1,6 +1,6 @@
 Name:		texlive-emarks
 Version:	24504
-Release:	1
+Release:	2
 Summary:	Named mark registers with e-TeX
 Group:		Publishing
 URL:		http://www.ctan.org/tex-archive/macros/latex/contrib/emarks
