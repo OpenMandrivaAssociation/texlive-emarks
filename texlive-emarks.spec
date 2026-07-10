@@ -1,58 +1,32 @@
-Name:		texlive-emarks
-Version:	24504
-Release:	2
+%global tl_name emarks
+%global tl_revision 24504
+
+Name:		texlive-%{tl_name}
+Epoch:		1
+Version:	1.0
+Release:	%{tl_revision}.1
 Summary:	Named mark registers with e-TeX
 Group:		Publishing
 URL:		https://www.ctan.org/tex-archive/macros/latex/contrib/emarks
-License:	LPPL1.3
-Source0:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.r%{version}.tar.xz
-Source1:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.doc.r%{version}.tar.xz
-Source2:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.source.r%{version}.tar.xz
+License:	lppl1.3
+Source0:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.r%{tl_revision}.tar.xz
+Source1:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.doc.r%{tl_revision}.tar.xz
+Source2:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/emarks.source.r%{tl_revision}.tar.xz
 BuildArch:	noarch
+BuildSystem:	texlive
 BuildRequires:	texlive-tlpkg
-Requires(pre):	texlive-tlpkg
-Requires(post):	texlive-kpathsea
+%texlive_base_requires
+Provides:	texlive(%{tl_name}) = %{tl_revision}
 
 %description
-E-TeX provides 32 768 mark registers; using this facility is
-far more comfortable than LaTeX tricks with \markright,
-\markboth, \leftmark and \rightmark. The package provides two
-commands for marking: \marksthe and \marksthecs, which have *
-forms which disable expansion; new mark registers are allocated
-as needed. Syntax is closely modelled on the \marks primitive.
-Four commands are provided for retrieving the marks registers'
-content: \thefirstmarks, \thebotmarks, thetopmarks and
-\getthemarks; and the command \ifmarksequal is available for
-comparing the content of marks registers. The package requires
-an e-TeX-enabled engine, and the etex package.
+E-TeX provides 32 768 mark registers; using this facility is far more
+comfortable than LaTeX tricks with \markright, \markboth, \leftmark and
+\rightmark. The package provides two commands for marking: \marksthe and
+\marksthecs, which have * forms which disable expansion; new mark
+registers are allocated as needed. Syntax is closely modelled on the
+\marks primitive. Four commands are provided for retrieving the marks
+registers' content: \thefirstmarks, \thebotmarks, thetopmarks and
+\getthemarks; and the command \ifmarksequal is available for comparing
+the content of marks registers. The package requires an e-TeX-enabled
+engine, and the etex package.
 
-%post
-%{_sbindir}/texlive.post
-
-%postun
-if [ $1 -eq 0 ]; then
-	%{_sbindir}/texlive.post
-fi
-
-#-----------------------------------------------------------------------
-%files
-%{_texmfdistdir}/tex/latex/emarks/emarks.sty
-%doc %{_texmfdistdir}/doc/latex/emarks/Fingerprint.jpg
-%doc %{_texmfdistdir}/doc/latex/emarks/README
-%doc %{_texmfdistdir}/doc/latex/emarks/emarks-fingerprint.png
-%doc %{_texmfdistdir}/doc/latex/emarks/emarks.pdf
-#- source
-%doc %{_texmfdistdir}/source/latex/emarks/emarks.drv
-%doc %{_texmfdistdir}/source/latex/emarks/emarks.dtx
-%doc %{_texmfdistdir}/source/latex/emarks/emarks.ins
-
-#-----------------------------------------------------------------------
-%prep
-%setup -c -a1 -a2
-%autopatch -p1
-
-%build
-
-%install
-mkdir -p %{buildroot}%{_texmfdistdir}
-cp -fpar tex doc source %{buildroot}%{_texmfdistdir}
